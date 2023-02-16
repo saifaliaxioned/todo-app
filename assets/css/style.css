@@ -82,6 +82,12 @@ sub { bottom: -.25em; }
 .cf { *zoom: 1; }
 
 /*for all*/
+*,*::before,*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
   box-sizing: border-box;
   font-family: sans-serif;
@@ -119,9 +125,118 @@ li {
 /*=================================
   main styling starts here
 =================================*/
+.todo-app .wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
+h1 {
+  margin: 90px 0 30px;
+  font-size: 40px;
+  font-weight: bold;
+  color: red;
+  text-align: center;
+}
 
+.todo-container {
+  /* margin-top: 90px; */
+  width: 500px;
+  min-width: 400px;
+  border-radius: 5px;
+  box-shadow:  1px 1px 11px  #838181;
+  overflow: hidden;
+}
 
+button {
+  padding: 5px;
+  background: none;
+  border: 1px solid transparent;
+  outline: none;
+}
+
+.todo-dashboard {
+  font-size: 15px;
+}
+
+.input-group input {
+  font-size: 30px;
+  padding: 20px 40px;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.input-group input::placeholder {
+  font-style: italic;
+}
+
+.active-filter {
+  border: 1px solid red;
+  border-radius: 8px;
+}
+
+.todo-dashboard,.todo-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-list {
+  position: relative;
+  padding: 20px 0 20px 50px;
+  border-top: 1px solid grey;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.todo-list::before {
+  content: '';
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #bbb7b7;
+  border-radius: 50%;
+  transform: translate(20%,-50%);
+}
+
+.completed-list {
+  color: #bebaba;
+  text-decoration-line: line-through; 
+}
+
+.completed-list::before {
+  content: '\f00c';
+  border-color: green;
+  color: green;
+  font-size: 15px;
+  font-family: 'FontAwesome';
+}
+
+.todo-list:last-child {
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+
+.todo-result,.filter-controls {
+  display: flex;
+  align-items: center;
+}
+
+.todo-result {
+  margin: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-controls {
+  gap: 20px;
+}
 
 
 

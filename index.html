@@ -13,8 +13,7 @@
   <!-- Place favicon.ico in the root directory: mathiasbynens.be/notes/touch-icons -->
   <link rel="shortcut icon" href="favicon.ico" />
   <!--font-awesome link for icons-->
-  <!-- <link rel="stylesheet" media="screen" href="assets/vendor/font-awesome/css/all.min.css" >
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
   <!-- Default style-sheet is for 'media' type screen (color computer display).  -->
   <link rel="stylesheet" media="screen" href="assets/css/style.css" >
 </head>
@@ -31,21 +30,22 @@
     <main>
       <section class="todo-app">
         <div class="wrapper">
-          <h1>todo</h1>
+          <h1>todos</h1>
           <div class="todo-container">
             <form action="#FIXME" method="post">
               <div class="input-group">
-                <input type="text" class="todo-input">
+                <input type="text" class="todo-input" placeholder="What needs to be done?">
               </div>
             </form>
             <div class="todo-dashboard">
-              <ul class="todo-items"></ul>
+              <ul class="todo-items">
+              </ul>
               <div class="todo-result">
                 <p>1 item left</p>
                 <ul class="filter-controls">
                   <li class="filter-list"><button class="all-btn">All</button></li>
-                  <li class="filter-list"><button class="active-btn">All</button></li>
-                  <li class="filter-list"><button class="completed-btn">All</button></li>
+                  <li class="filter-list"><button class="active-btn">Active</button></li>
+                  <li class="filter-list"><button class="completed-btn">Completed</button></li>
                 </ul>
                 <div class="clear-todo">
                   <button class="clear-btn">Clear completed</button>
