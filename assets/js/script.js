@@ -4,10 +4,11 @@ const todoItem = document.querySelector('.todo-items'),
   allBtn = document.querySelector('.all-btn'),
   activeBtn = document.querySelector('.active-btn'),
   completeBtn = document.querySelector('.completed-btn'),
+  clearBtn = document.querySelector('.clear-btn'),
   items = document.querySelector('.todo-result p');
 
 const data = JSON.parse(localStorage.getItem('todoData'));
-let collection = data ? data : [], editId = null, a;
+let collection = data ? data : [], editId = null, itemLeft;
 
 const newList = () => {
   const obj = {
@@ -35,12 +36,13 @@ const createList = () => {
     todoItem.innerHTML = li;
     activeList();
     completedList();
+    itemsCount();
   }
 }
 
 const itemsCount = () => {
-  a = collection.filter((el) => { if (el.completed === null) { return el } }, []);
-  items.innerText = `${a.length} items left`;
+  itemLeft = collection.filter((el) => { if (el.completed === null) { return el } });
+  items.innerText = `${itemLeft.length} items left`;
 }
 
 todoForm.addEventListener('submit', (e) => {
@@ -107,7 +109,12 @@ completeBtn.addEventListener('click', () => {
   });
 });
 
-const todoList = document.querySelectorAll('.todo-list');
+clearBtn.addEventListener('click', () => {
+  collection = itemLeft;
+  localStorage.setItem('todoData', JSON.stringify(collection));
+  createList();
+});
+
 
 // initial load
 document.load = createList();
