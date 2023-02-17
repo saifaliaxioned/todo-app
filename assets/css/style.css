@@ -205,12 +205,12 @@ button {
   transform: translate(20%,-50%);
 }
 
-.completed-list {
+.completed {
   color: #bebaba;
   text-decoration-line: line-through; 
 }
 
-.completed-list::before {
+.completed::before {
   content: '\f00c';
   border-color: green;
   color: green;
@@ -238,6 +238,7 @@ button {
   gap: 20px;
 }
 
+.hide-list { display: none; }
 
 
 
