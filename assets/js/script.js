@@ -70,10 +70,8 @@ const listClickEvent = (btnEvent) => {
 
 const clickEvent = (btn, btnEvent) => {
   btn.addEventListener(btnEvent, () => {
-    const activeBtn  = document.querySelector('.active-filter');
-    if (activeBtn) {
-      activeBtn.classList.remove('active-filter');
-    }
+    const activeBtn = document.querySelector('.active-filter');
+    activeBtn.classList.remove('active-filter');
     btn.classList.add('active-filter');
     const todoList = document.querySelectorAll('.todo-list');
     todoList.forEach((list) => {
