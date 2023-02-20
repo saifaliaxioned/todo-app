@@ -1,6 +1,6 @@
-const todoForm = document.querySelector('.todo-form');
-const todoInput = document.querySelector('.todo-input');
-const todoItem = document.querySelector('.todo-items'),
+const todoForm = document.querySelector('.todo-form'),
+  todoInput = document.querySelector('.todo-input'),
+  todoItem = document.querySelector('.todo-items'),
   allBtn = document.querySelector('.all-btn'),
   activeBtn = document.querySelector('.active-btn'),
   completeBtn = document.querySelector('.completed-btn'),
@@ -11,21 +11,13 @@ const data = JSON.parse(localStorage.getItem('todoData'));
 let collection = data ? data : [], editId = null, itemLeft;
 
 const newList = () => {
-  const obj = {
-    todoname: todoInput.value,
-    completed: null
-  };
-  if (editId === null) {
-    collection.push(obj);
-  } else {
-    collection[editId] = obj;
-    editId = null;
-  }
+  const obj = { todoname: todoInput.value, completed: null };
+  editId == null ? collection.push(obj) : collection[editId] = obj;
+  editId = null;
   localStorage.setItem('todoData', JSON.stringify(collection));
   createList();
   todoInput.value = "";
 }
-
 
 const createList = () => {
   if (collection != null) {
@@ -34,8 +26,8 @@ const createList = () => {
       li += `<li class="todo-list ${list.completed == null ? '' : list.completed}">${list.todoname}</li>`;
     });
     todoItem.innerHTML = li;
-    activeList();
-    completedList();
+    listClickEvent('click');
+    listClickEvent('dblclick');
     itemsCount();
   }
 }
@@ -55,59 +47,53 @@ todoInput.addEventListener('keyup', (e) => {
   }
 });
 
-const completedList = () => {
+const listClickEvent = (btnEvent) => {
   const todoList = document.querySelectorAll('.todo-list');
   todoList.forEach((list, index) => {
-    list.addEventListener('click', () => {
-      editId = null;
-      list.classList.remove('active');
-      list.classList.add('completed');
-      collection[index].completed = 'completed';
+    list.addEventListener(btnEvent, () => {
+      if (btnEvent === 'click') {
+        editId = null;
+        list.classList.remove('active');
+        list.classList.add('completed');
+        collection[index].completed = 'completed';
+      } else {
+        list.classList.remove('completed');
+        todoInput.value = list.innerText;
+        editId = index;
+        collection[editId].completed = null;
+      }
       localStorage.setItem('todoData', JSON.stringify(collection));
       itemsCount();
     });
   });
 }
 
-const activeList = () => {
-  const todoList = document.querySelectorAll('.todo-list');
-  todoList.forEach((list, index) => {
-    list.addEventListener('dblclick', () => {
-      list.classList.remove('completed');
-      todoInput.value = list.innerText;
-      editId = index;
-      collection[editId].completed = null;
-      localStorage.setItem('todoData', JSON.stringify(collection));
-      itemsCount();
+const clickEvent = (btn, btnEvent) => {
+  btn.addEventListener(btnEvent, () => {
+    const todoList = document.querySelectorAll('.todo-list');
+    todoList.forEach((list) => {
+      if (btn.classList.contains('all-btn')) {
+        createList();
+      } else if (btn.classList.contains('active-btn')) {
+        if (list.classList.contains('completed')) {
+          list.classList.add('hide-list');
+        } else {
+          list.classList.remove('hide-list');
+        }
+      } else {
+        if (!list.classList.contains('completed')) {
+          list.classList.add('hide-list');
+        } else {
+          list.classList.remove('hide-list');
+        }
+      }
     });
   });
 };
 
-allBtn.addEventListener('click', () => {
-  createList();
-});
-
-activeBtn.addEventListener('click', () => {
-  const todoList = document.querySelectorAll('.todo-list');
-  todoList.forEach((list) => {
-    if (list.classList.contains('completed')) {
-      list.classList.add('hide-list');
-    } else {
-      list.classList.remove('hide-list');
-    }
-  });
-});
-
-completeBtn.addEventListener('click', () => {
-  const todoList = document.querySelectorAll('.todo-list');
-  todoList.forEach((list) => {
-    if (!list.classList.contains('completed')) {
-      list.classList.add('hide-list');
-    } else {
-      list.classList.remove('hide-list');
-    }
-  });
-});
+clickEvent(allBtn, 'click');
+clickEvent(activeBtn, 'click');
+clickEvent(completeBtn, 'click');
 
 clearBtn.addEventListener('click', () => {
   collection = itemLeft;
@@ -115,33 +101,5 @@ clearBtn.addEventListener('click', () => {
   createList();
 });
 
-
 // initial load
 document.load = createList();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
