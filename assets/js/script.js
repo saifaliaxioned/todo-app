@@ -42,7 +42,7 @@ todoForm.addEventListener('submit', (e) => {
 });
 
 todoInput.addEventListener('keyup', (e) => {
-  if (e.key == 'Enter') {
+  if (e.key == 'Enter' && todoInput.value) {
     newList();
   }
 });
@@ -70,6 +70,11 @@ const listClickEvent = (btnEvent) => {
 
 const clickEvent = (btn, btnEvent) => {
   btn.addEventListener(btnEvent, () => {
+    const activeBtn  = document.querySelector('.active-filter');
+    if (activeBtn) {
+      activeBtn.classList.remove('active-filter');
+    }
+    btn.classList.add('active-filter');
     const todoList = document.querySelectorAll('.todo-list');
     todoList.forEach((list) => {
       if (btn.classList.contains('all-btn')) {
