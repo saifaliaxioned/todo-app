@@ -1,12 +1,13 @@
 const todoForm = document.querySelector('.todo-form'),
   todoInput = document.querySelector('.todo-input'),
   todoItem = document.querySelector('.todo-items'),
-  allListBtn = document.querySelector('.all-btn'),
-  activeBtn = document.querySelector('.active-btn'),
-  completeBtn = document.querySelector('.completed-btn'),
+  filterAll = document.querySelector('.all-btn'),
+  filterActive = document.querySelector('.active-btn'),
+  filterCompleted = document.querySelector('.completed-btn'),
   clearBtn = document.querySelector('.clear-btn'),
   items = document.querySelector('.todo-result p'),
-  buttonList = document.querySelectorAll('.filter-list button');
+  buttonList = document.querySelectorAll('.filter-list button'),
+  activeBtn = document.querySelector('.active-filter');
 
 const data = JSON.parse(localStorage.getItem('todoData'));
 let collection = data ? data : [], editId = null, itemLeft;
@@ -31,6 +32,12 @@ const createList = () => {
     completeList();
     itemsCount();
   }
+};
+
+const setActive = (btn) => {
+  const activeBtn = document.querySelector('.active-filter');
+  activeBtn.classList.remove('active-filter');
+  btn.classList.add('active-filter');
 }
 
 const itemsCount = () => {
@@ -45,6 +52,7 @@ todoForm.addEventListener('submit', (e) => {
 todoInput.addEventListener('keyup', (e) => {
   if (e.key == 'Enter' && todoInput.value) {
     newList();
+    setActive(filterAll);
   }
 });
 
@@ -76,19 +84,13 @@ const completeList = () => {
   })
 };
 
-buttonList.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const activeBtn = document.querySelector('.active-filter');
-    activeBtn.classList.remove('active-filter');
-    btn.classList.add('active-filter');
-  })
-});
-
-allListBtn.addEventListener('click', () => {
+filterAll.addEventListener('click', () => {
+  setActive(filterAll);
   createList();
 });
 
-activeBtn.addEventListener('click', () => {
+filterActive.addEventListener('click', () => {
+  setActive(filterActive);
   const todoList = document.querySelectorAll('.todo-list');
   todoList.forEach((list) => {
     if (list.classList.contains('completed')) {
@@ -99,7 +101,8 @@ activeBtn.addEventListener('click', () => {
   });
 });
 
-completeBtn.addEventListener('click', () => {
+filterCompleted.addEventListener('click', () => {
+  setActive(filterCompleted);
   const todoList = document.querySelectorAll('.todo-list');
   todoList.forEach((list) => {
     if (!list.classList.contains('completed')) {
@@ -111,6 +114,7 @@ completeBtn.addEventListener('click', () => {
 });
 
 clearBtn.addEventListener('click', () => {
+  setActive(filterAll);
   collection = itemLeft;
   localStorage.setItem('todoData', JSON.stringify(collection));
   createList();
